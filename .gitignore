@@ -1,0 +1,13 @@
+# GoalAchiever - Root .gitignore
+
+# Dependencies - Backend
+backend/node_modules/
+
+# Dependencies - Frontend
+frontend/node_modules/
+
+# Environment variables - Backend
+backend/.env
+
+# Environment variables - Frontend
+frontend/.env
