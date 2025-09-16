@@ -1,0 +1,405 @@
+/* Goal Card Styles */
+.goal-card {
+  background: var(--color-background);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px var(--color-shadow);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.goal-card.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.goal-card-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(1px);
+  border-radius: 12px;
+}
+
+.goal-card-loading-overlay .loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top: 2px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.goal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--color-shadow-dark);
+  border-color: var(--color-border-dark);
+}
+
+.goal-card.overdue {
+  border-left: 4px solid var(--color-error);
+  background: var(--color-error-light);
+}
+
+.goal-card.archived {
+  opacity: 0.7;
+  background: var(--color-background-secondary);
+  border-color: var(--color-border);
+}
+
+.goal-card.archived .goal-title {
+  color: var(--color-text-tertiary);
+}
+
+.goal-card.archived .goal-description {
+  color: var(--color-text-tertiary);
+}
+
+.goal-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.goal-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.goal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.goal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.status-badge,
+.priority-badge,
+.complexity-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  background: var(--color-background-tertiary);
+  border: 1px solid var(--color-border);
+  text-transform: capitalize;
+  color: var(--color-text);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(2px)) {
+  .status-badge,
+  .priority-badge,
+  .complexity-badge {
+    background: var(--color-background-tertiary);
+  }
+}
+
+.archived-badge {
+  background: var(--color-warning-light);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.goal-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.action-btn {
+  background: var(--color-background-tertiary);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: auto;
+  height: 2rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(2px)) {
+  .action-btn {
+    background: var(--color-background-tertiary);
+  }
+}
+
+.action-btn:hover {
+  background: var(--color-background-secondary);
+  border-color: var(--color-border-dark);
+  color: var(--color-text);
+}
+
+.edit-btn:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.archive-btn:hover {
+  background: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.delete-btn:hover {
+  background: var(--color-error-light);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.goal-card-body {
+  padding: 1rem 1.5rem;
+}
+
+.goal-description {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.goal-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.meta-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.meta-value.overdue {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.goal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background: var(--color-background-tertiary);
+  color: var(--color-text-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.goal-progress {
+  background: var(--color-background-secondary);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.progress-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.progress-percentage {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-success) 0%, var(--color-success) 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-details {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.milestones-completed {
+  font-weight: 500;
+}
+
+.goal-card-footer {
+  padding: 1rem 1.5rem;
+  background: var(--color-background-secondary);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.view-details-btn,
+.view-journey-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.view-details-btn {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.view-details-btn:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.view-journey-btn {
+  background: var(--color-background);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.view-journey-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .goal-card-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .goal-actions {
+    margin-left: 0;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  
+  .action-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .goal-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .goal-card-footer {
+    flex-direction: column;
+  }
+
+  .view-details-btn,
+  .view-journey-btn {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .goal-card-header,
+  .goal-card-body,
+  .goal-card-footer {
+    padding: 1rem;
+  }
+
+  .goal-title {
+    font-size: 1.125rem;
+  }
+
+  .goal-badges {
+    gap: 0.25rem;
+  }
+
+  .status-badge,
+  .priority-badge,
+  .complexity-badge {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+  }
+}

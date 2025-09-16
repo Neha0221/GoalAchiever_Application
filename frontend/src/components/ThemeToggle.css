@@ -1,0 +1,101 @@
+/* Theme Toggle Styles */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  background: var(--color-background-tertiary);
+  border-color: var(--color-border-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px var(--color-shadow);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.theme-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform var(--transition-fast);
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+  transform: scale(1.1);
+}
+
+.theme-toggle-text {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Animation for icon rotation */
+.theme-toggle-icon svg {
+  transition: transform var(--transition-normal);
+}
+
+.theme-toggle:hover .theme-toggle-icon svg {
+  transform: rotate(15deg);
+}
+
+/* Compact version for mobile */
+@media (max-width: 768px) {
+  .theme-toggle {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    gap: var(--spacing-xs);
+  }
+  
+  .theme-toggle-text {
+    display: none;
+  }
+  
+  .theme-toggle-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .theme-toggle-icon,
+  .theme-toggle-icon svg {
+    transition: none;
+  }
+  
+  .theme-toggle:hover {
+    transform: none;
+  }
+  
+  .theme-toggle:hover .theme-toggle-icon {
+    transform: none;
+  }
+  
+  .theme-toggle:hover .theme-toggle-icon svg {
+    transform: none;
+  }
+}

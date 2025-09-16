@@ -4,6 +4,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:openrouter": "node test-openrouter.js",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
@@ -15,6 +16,7 @@
     "bcryptjs": "^3.0.2",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
+    "cron-parser": "^4.9.0",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-mongo-sanitize": "^2.2.0",
@@ -26,6 +28,7 @@
     "mongoose": "^8.18.1",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.9.7",
     "socket.io": "^4.8.1",
     "xss-clean": "^0.1.4"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import ThemeToggle from './ThemeToggle';
 import './Navigation.css';
 
 const Navigation = () => {
@@ -30,15 +31,26 @@ const Navigation = () => {
         <div className="nav-links">
           {isAuthenticated ? (
             <>
-              <span className="nav-user">
-                Welcome, {user?.firstName} {user?.lastName}
-              </span>
-              <button onClick={handleLogout} className="nav-logout">
-                Logout
-              </button>
+              <div className="nav-main-links">
+                <Link to="/dashboard" className="nav-link">Dashboard</Link>
+                <Link to="/goals" className="nav-link">Goals</Link>
+                <Link to="/progress" className="nav-link">Progress</Link>
+                <Link to="/ai-tutor" className="nav-link">AI Tutor</Link>
+                <Link to="/checkin" className="nav-link">Check-in</Link>
+              </div>
+              <div className="nav-user-section">
+                <ThemeToggle />
+                <span className="nav-user">
+                  Welcome, {user?.firstName} {user?.lastName}
+                </span>
+                <button onClick={handleLogout} className="nav-logout">
+                  Logout
+                </button>
+              </div>
             </>
           ) : (
             <>
+              <ThemeToggle />
               <Link to="/login" className="nav-link">Login</Link>
               <Link to="/register" className="nav-link">Register</Link>
             </>

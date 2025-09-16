@@ -1,0 +1,66 @@
+/* Goals Page Styles */
+.goals-page {
+  min-height: 100vh;
+  background: var(--color-background-secondary);
+}
+
+.goals-page-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: var(--color-text-inverse);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.page-title h1 {
+  font-size: var(--font-size-xxxl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-md) 0;
+  text-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.page-title p {
+  font-size: var(--font-size-lg);
+  margin: 0;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.goals-page-content {
+  padding: var(--spacing-xl) 0;
+  min-height: calc(100vh - 200px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .goals-page-header {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .page-title h1 {
+    font-size: var(--font-size-xxl);
+  }
+
+  .page-title p {
+    font-size: var(--font-size-md);
+  }
+
+  .goals-page-content {
+    padding: var(--spacing-md) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .goals-page-header {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .page-title h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .page-title p {
+    font-size: var(--font-size-sm);
+  }
+}
