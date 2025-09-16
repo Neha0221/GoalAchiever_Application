@@ -58,7 +58,8 @@ api.interceptors.response.use(
       // Handle unauthorized access
       console.log('API Response - 401 Unauthorized, redirecting to login');
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Use React Router navigation instead of window.location
+      // The AuthContext will handle the redirect
     }
     
     // Handle timeout errors specifically

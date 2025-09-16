@@ -95,8 +95,8 @@ function App() {
               {/* Default redirect */}
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               
-              {/* Catch all route */}
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              {/* Catch all route - redirect to login for unauthenticated users */}
+              <Route path="*" element={<Navigate to="/login" replace />} />
               </Routes>
             </div>
             </Router>

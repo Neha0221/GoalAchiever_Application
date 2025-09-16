@@ -30,7 +30,8 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Use React Router navigation instead of window.location
+      // The AuthContext will handle the redirect
     }
     return Promise.reject(error);
   }
