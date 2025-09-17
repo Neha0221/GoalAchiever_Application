@@ -101,6 +101,15 @@ const GoalDetail = () => {
     }
   };
 
+  const getComplexityColor = (complexity) => {
+    switch (complexity) {
+      case 'beginner': return '#10b981';
+      case 'intermediate': return '#f59e0b';
+      case 'advanced': return '#ef4444';
+      default: return '#6b7280';
+    }
+  };
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -174,7 +183,10 @@ const GoalDetail = () => {
               >
                 {currentGoal.priority}
               </span>
-              <span className="complexity-badge">
+            <span 
+              className="complexity-badge"
+              style={{ backgroundColor: getComplexityColor(currentGoal.complexity) }}
+            >
                 {currentGoal.complexity}
               </span>
             </div>

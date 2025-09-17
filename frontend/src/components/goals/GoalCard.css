@@ -7,6 +7,14 @@
   transition: all 0.3s ease;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.goal-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .goal-card.loading {
@@ -102,23 +110,19 @@
   padding: 0.25rem 0.75rem;
   border-radius: 6px;
   font-size: 0.75rem;
-  font-weight: 400;
-  background: var(--color-background-tertiary);
-  border: 1px solid var(--color-border);
+  font-weight: 500;
+  border: 1px solid transparent;
   text-transform: capitalize;
-  color: var(--color-text);
+  color: white;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+  display: inline-block;
+  min-width: fit-content;
+  text-align: center;
+  line-height: 1.2;
 }
 
-/* Fallback for browsers that don't support backdrop-filter */
-@supports not (backdrop-filter: blur(2px)) {
-  .status-badge,
-  .priority-badge,
-  .complexity-badge {
-    background: var(--color-background-tertiary);
-  }
-}
+/* Inline styles will handle the background color for badges */
 
 .archived-badge {
   background: var(--color-warning-light);
@@ -313,6 +317,7 @@
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .view-details-btn,

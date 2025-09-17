@@ -452,44 +452,6 @@ class CheckInController {
     }
   }
 
-  // Get check-in statistics
-  static async getCheckInStatistics(req, res) {
-    try {
-      const userId = req.user.id;
-      const { timeRange = 'month' } = req.query;
-
-      const stats = await CheckIn.getStatistics(userId, timeRange);
-      const statistics = stats.length > 0 ? stats[0] : {
-        total: 0,
-        completed: 0,
-        missed: 0,
-        pending: 0,
-        averageRating: 0,
-        averageProgress: 0
-      };
-
-      // Calculate completion rate
-      const completionRate = statistics.total > 0 
-        ? Math.round((statistics.completed / statistics.total) * 100) 
-        : 0;
-
-      res.json({
-        success: true,
-        data: {
-          ...statistics,
-          completionRate,
-          timeRange
-        }
-      });
-    } catch (error) {
-      console.error('Get check-in statistics error:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to fetch check-in statistics',
-        error: error.message
-      });
-    }
-  }
 
   // Create recurring check-ins for a goal
   static async createRecurringCheckIns(req, res) {
@@ -540,52 +502,6 @@ class CheckInController {
     }
   }
 
-  // Get check-ins for calendar view
-  static async getCheckInsForCalendar(req, res) {
-    try {
-      const userId = req.user.id;
-      const { startDate, endDate } = req.query;
-
-      if (!startDate || !endDate) {
-        return res.status(400).json({
-          success: false,
-          message: 'Start date and end date are required'
-        });
-      }
-
-      const checkIns = await CheckIn.findByDateRange(
-        userId, 
-        new Date(startDate), 
-        new Date(endDate)
-      );
-
-      // Format for calendar display
-      const calendarEvents = checkIns.map(checkIn => ({
-        id: checkIn._id,
-        title: checkIn.title,
-        start: checkIn.scheduledDate,
-        end: checkIn.scheduledDate,
-        status: checkIn.status,
-        type: checkIn.type,
-        goal: checkIn.goal,
-        journey: checkIn.journey,
-        frequency: checkIn.frequency,
-        isOverdue: checkIn.isOverdue
-      }));
-
-      res.json({
-        success: true,
-        data: calendarEvents
-      });
-    } catch (error) {
-      console.error('Get check-ins for calendar error:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to fetch check-ins for calendar',
-        error: error.message
-      });
-    }
-  }
 }
 
 module.exports = CheckInController;

@@ -150,8 +150,6 @@ export const apiEndpoints = {
     getUpcoming: (limit = 10) => api.get(`/checkin/upcoming?limit=${limit}`),
     getOverdue: () => api.get('/checkin/overdue'),
     getByDateRange: (startDate, endDate) => api.get(`/checkin/date-range?startDate=${startDate}&endDate=${endDate}`),
-    getStatistics: (timeRange = 'month') => api.get(`/checkin/statistics?timeRange=${timeRange}`),
-    getForCalendar: (startDate, endDate) => api.get(`/checkin/calendar?startDate=${startDate}&endDate=${endDate}`),
     createRecurring: (data) => api.post('/checkin/recurring/create', data),
   },
   

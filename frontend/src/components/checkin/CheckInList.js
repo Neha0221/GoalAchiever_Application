@@ -57,10 +57,12 @@ const CheckInList = ({ showFilters = true, showCreateButton = true }) => {
 
   const handleCompleteCheckin = (checkin) => {
     setCompletingCheckin(checkin);
+    setShowForm(true);
   };
 
   const handleRescheduleCheckin = (checkin) => {
     setReschedulingCheckin(checkin);
+    setShowForm(true);
   };
 
   const handleDeleteCheckin = async (checkinId) => {

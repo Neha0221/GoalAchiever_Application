@@ -10,17 +10,6 @@ const initialState = {
   upcomingCheckins: [],
   overdueCheckins: [],
   currentCheckin: null,
-  statistics: {
-    total: 0,
-    completed: 0,
-    missed: 0,
-    pending: 0,
-    completionRate: 0,
-    averageRating: 0,
-    averageProgress: 0,
-    timeRange: 'month'
-  },
-  calendarData: [],
   loading: false,
   loadingCheckins: {}, // Track individual check-in loading states
   error: null,
@@ -52,8 +41,6 @@ const actionTypes = {
   SET_CURRENT_CHECKIN: 'SET_CURRENT_CHECKIN',
   SET_UPCOMING_CHECKINS: 'SET_UPCOMING_CHECKINS',
   SET_OVERDUE_CHECKINS: 'SET_OVERDUE_CHECKINS',
-  SET_STATISTICS: 'SET_STATISTICS',
-  SET_CALENDAR_DATA: 'SET_CALENDAR_DATA',
   SET_FILTERS: 'SET_FILTERS',
   SET_PAGINATION: 'SET_PAGINATION',
   RESET_STATE: 'RESET_STATE'
@@ -138,14 +125,7 @@ const checkinReducer = (state, action) => {
         overdueCheckins: Array.isArray(action.payload) ? action.payload : [] 
       };
     
-    case actionTypes.SET_STATISTICS:
-      return { ...state, statistics: action.payload };
     
-    case actionTypes.SET_CALENDAR_DATA:
-      return { 
-        ...state, 
-        calendarData: Array.isArray(action.payload) ? action.payload : [] 
-      };
     
     case actionTypes.SET_FILTERS:
       return { ...state, filters: { ...state.filters, ...action.payload } };
@@ -497,23 +477,7 @@ export const CheckInProvider = ({ children }) => {
     }
   }, []);
   
-  const fetchStatistics = useCallback(async (timeRange = 'month') => {
-    try {
-      const response = await checkinService.getCheckinStatistics(timeRange);
-      dispatch({ type: actionTypes.SET_STATISTICS, payload: response.data });
-    } catch (error) {
-      dispatch({ type: actionTypes.SET_ERROR, payload: error.message });
-    }
-  }, []);
   
-  const fetchCalendarData = useCallback(async (startDate, endDate) => {
-    try {
-      const response = await checkinService.getCheckinsForCalendar(startDate, endDate);
-      dispatch({ type: actionTypes.SET_CALENDAR_DATA, payload: response.data });
-    } catch (error) {
-      dispatch({ type: actionTypes.SET_ERROR, payload: error.message });
-    }
-  }, []);
   
   const createRecurringCheckins = useCallback(async (recurringData) => {
     try {
@@ -556,8 +520,6 @@ export const CheckInProvider = ({ children }) => {
     getCheckinById,
     fetchUpcomingCheckins,
     fetchOverdueCheckins,
-    fetchStatistics,
-    fetchCalendarData,
     createRecurringCheckins,
     setFilters,
     setPagination,
@@ -577,8 +539,6 @@ export const CheckInProvider = ({ children }) => {
     getCheckinById,
     fetchUpcomingCheckins,
     fetchOverdueCheckins,
-    fetchStatistics,
-    fetchCalendarData,
     createRecurringCheckins,
     setFilters,
     setPagination,
@@ -591,12 +551,11 @@ export const CheckInProvider = ({ children }) => {
       fetchCheckins();
       fetchUpcomingCheckins();
       fetchOverdueCheckins();
-      fetchStatistics();
     } else {
       // Reset state when not authenticated
       dispatch({ type: actionTypes.RESET_STATE });
     }
-  }, [isAuthenticated, fetchCheckins, fetchUpcomingCheckins, fetchOverdueCheckins, fetchStatistics]);
+  }, [isAuthenticated, fetchCheckins, fetchUpcomingCheckins, fetchOverdueCheckins]);
 
   const value = {
     ...state,
@@ -621,8 +580,6 @@ export const useCheckIns = () => {
       upcomingCheckins: [],
       overdueCheckins: [],
       currentCheckin: null,
-      statistics: { total: 0, completed: 0, missed: 0, pending: 0, completionRate: 0, averageRating: 0, averageProgress: 0, timeRange: 'month' },
-      calendarData: [],
       loading: false,
       error: null,
       filters: { status: 'all', goal: 'all', frequency: 'all', startDate: null, endDate: null },
@@ -636,8 +593,6 @@ export const useCheckIns = () => {
       rescheduleCheckin: () => {},
       fetchUpcomingCheckins: () => {},
       fetchOverdueCheckins: () => {},
-      fetchStatistics: () => {},
-      fetchCalendarData: () => {},
       createRecurringCheckins: () => {},
       setFilters: () => {},
       setPagination: () => {},

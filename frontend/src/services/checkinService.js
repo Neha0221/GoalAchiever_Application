@@ -192,14 +192,7 @@ export const checkinService = {
     return await retryRequest(() => apiEndpoints.checkin.getByDateRange(startDate, endDate));
   },
 
-  getCheckinStatistics: async (timeRange = 'month') => {
-    return await retryRequest(() => apiEndpoints.checkin.getStatistics(timeRange));
-  },
 
-  // Calendar integration
-  getCheckinsForCalendar: async (startDate, endDate) => {
-    return await retryRequest(() => apiEndpoints.checkin.getForCalendar(startDate, endDate));
-  },
 
   // Recurring check-ins
   createRecurringCheckins: async (recurringData) => {

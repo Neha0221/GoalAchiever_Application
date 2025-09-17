@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GoalCard from './GoalCard';
 import GoalForm from './GoalForm';
 import './GoalList.css';
@@ -17,14 +17,36 @@ const GoalList = ({
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingGoal, setEditingGoal] = useState(null);
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  // Static list view (grid toggle removed)
+
+  // Debug logging
+  console.log('GoalList - Received goals:', goals);
+  console.log('GoalList - Goals type:', typeof goals);
+  console.log('GoalList - Goals is array:', Array.isArray(goals));
+  console.log('GoalList - Goals length:', goals?.length);
+
+  // Effect to log when goals change
+  useEffect(() => {
+    console.log('GoalList - Goals state changed:', goals);
+    console.log('GoalList - Goals count:', goals?.length || 0);
+  }, [goals]);
 
   const handleCreateGoal = async (goalData) => {
     try {
-      await onCreateGoal(goalData);
+      console.log('GoalList - Creating goal with data:', goalData);
+      const result = await onCreateGoal(goalData);
+      console.log('GoalList - Goal created successfully:', result);
+      
+      // Close the form after successful creation
       setShowForm(false);
+      
+      // Force a small delay to ensure state updates are processed
+      setTimeout(() => {
+        console.log('GoalList - Form closed, checking goals state...');
+      }, 100);
     } catch (error) {
-      console.error('Error creating goal:', error);
+      console.error('GoalList - Error creating goal:', error);
+      // Don't close the form if there was an error
     }
   };
 
@@ -136,22 +158,6 @@ const GoalList = ({
           </p>
         </div>
         <div className="header-right">
-          <div className="view-controls">
-            <button
-              className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-              onClick={() => setViewMode('grid')}
-              title="Grid View"
-            >
-              ⊞
-            </button>
-            <button
-              className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-              onClick={() => setViewMode('list')}
-              title="List View"
-            >
-              ☰
-            </button>
-          </div>
           <button
             className="create-goal-btn"
             onClick={() => setShowForm(true)}
@@ -244,7 +250,7 @@ const GoalList = ({
           )}
         </div>
       ) : (
-        <div className={`goals-container ${viewMode}`}>
+        <div className={`goals-container list`}>
           {filteredGoals.map(goal => (
             <GoalCard
               key={goal._id}

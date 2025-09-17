@@ -145,10 +145,10 @@ const GoalForm = ({ goal, onSubmit, onCancel, isEditing = false }) => {
       };
 
       console.log('GoalForm - Submitting data:', submitData);
-      await onSubmit(submitData);
-      console.log('GoalForm - Submit successful');
+      const result = await onSubmit(submitData);
+      console.log('GoalForm - Submit successful, result:', result);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('GoalForm - Error submitting form:', error);
     } finally {
       setIsSubmitting(false);
     }

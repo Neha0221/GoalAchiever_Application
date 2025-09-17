@@ -67,7 +67,10 @@ export const goalService = {
   },
 
   createGoal: async (goalData) => {
-    return await apiEndpoints.goals.create(goalData);
+    console.log('GoalService - Creating goal with data:', goalData);
+    const response = await apiEndpoints.goals.create(goalData);
+    console.log('GoalService - Create goal response:', response);
+    return response;
   },
 
   updateGoal: async (goalId, goalData) => {

@@ -101,9 +101,13 @@ const goalReducer = (state, action) => {
       };
     
     case actionTypes.ADD_GOAL:
+      console.log('ADD_GOAL Reducer - Payload:', action.payload);
+      console.log('ADD_GOAL Reducer - Current Goals:', state.goals);
+      const newGoals = Array.isArray(state.goals) ? [action.payload, ...state.goals] : [action.payload];
+      console.log('ADD_GOAL Reducer - New Goals:', newGoals);
       return { 
         ...state, 
-        goals: Array.isArray(state.goals) ? [action.payload, ...state.goals] : [action.payload] 
+        goals: newGoals
       };
     
     case actionTypes.UPDATE_GOAL:
@@ -242,14 +246,37 @@ export const GoalProvider = ({ children }) => {
     try {
       dispatch({ type: actionTypes.SET_LOADING, payload: true });
       const response = await goalService.createGoal(goalData);
-      dispatch({ type: actionTypes.ADD_GOAL, payload: response.data });
-      dispatch({ type: actionTypes.SET_LOADING, payload: false });
-      return response.data;
+      console.log('Create Goal Response:', response);
+      
+      // Handle different response structures
+      const createdGoal = response.data?.data || response.data;
+      console.log('Processed goal data:', createdGoal);
+      
+      if (createdGoal && createdGoal._id) {
+        // Add the goal to the state
+        dispatch({ type: actionTypes.ADD_GOAL, payload: createdGoal });
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
+        
+        // Force refresh the goals list to ensure the new goal appears
+        console.log('Force refreshing goals list after creation...');
+        await fetchGoals();
+        
+        return createdGoal;
+      } else {
+        console.error('Invalid goal data received:', createdGoal);
+        // Fallback: refresh goals list to get the latest data
+        console.log('Invalid goal data, refreshing goals list...');
+        await fetchGoals();
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
+        throw new Error('Invalid goal data received');
+      }
     } catch (error) {
+      console.error('Error creating goal:', error);
       dispatch({ type: actionTypes.SET_ERROR, payload: error.message });
+      dispatch({ type: actionTypes.SET_LOADING, payload: false });
       throw error;
     }
-  }, []);
+  }, [fetchGoals]);
   
   const updateGoal = useCallback(async (goalId, goalData) => {
     // Store current goal for potential rollback

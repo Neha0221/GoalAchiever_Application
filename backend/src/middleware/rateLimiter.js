@@ -4,7 +4,7 @@ const { ipKeyGenerator } = require('express-rate-limit');
 // Rate limiting for AI tutor endpoints (very conservative for free tier)
 const aiTutorRateLimit = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // 5 requests per 15 minutes per IP (very conservative for free tier)
+  max: 100, // 100 requests per 15 minutes per IP (very conservative for free tier)
   message: {
     success: false,
     message: 'Too many AI requests. Please wait 15 minutes before trying again.',

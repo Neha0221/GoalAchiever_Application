@@ -297,9 +297,9 @@ export const AITutorProvider = ({ children }) => {
       try {
         dispatch({ type: actionTypes.SET_TYPING, payload: true });
         dispatch({ type: actionTypes.ADD_MESSAGE, payload: { role: 'user', content: message, timestamp: new Date() } });
-        
+        console.log('Sending message:', message);
         const response = await AIService.sendMessage(message, sessionId);
-        
+        console.log('Response:', response);
         dispatch({ type: actionTypes.ADD_MESSAGE, payload: { 
           role: 'assistant', 
           content: response.response, 

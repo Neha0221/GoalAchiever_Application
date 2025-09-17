@@ -655,7 +655,7 @@ class AIController {
       return [...baseRecommendations, ...specificRecommendations].slice(0, 5);
     }
 
-    return baseRecommendations;
+    return baseRecommendations; 
   }
 }
 

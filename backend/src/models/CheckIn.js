@@ -313,53 +313,5 @@ checkInSchema.statics.findByDateRange = function(userId, startDate, endDate) {
   .sort({ scheduledDate: 1 });
 };
 
-// Static method to get check-in statistics
-checkInSchema.statics.getStatistics = function(userId, timeRange = 'month') {
-  const now = new Date();
-  let startDate;
-
-  switch (timeRange) {
-    case 'week':
-      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      break;
-    case 'month':
-      startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-      break;
-    case 'quarter':
-      startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-      break;
-    case 'year':
-      startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-      break;
-    default:
-      startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  }
-
-  return this.aggregate([
-    {
-      $match: {
-        user: new mongoose.Types.ObjectId(userId),
-        scheduledDate: { $gte: startDate }
-      }
-    },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-        completed: {
-          $sum: { $cond: [{ $eq: ['$status', 'completed'] }, 1, 0] }
-        },
-        missed: {
-          $sum: { $cond: [{ $eq: ['$status', 'missed'] }, 1, 0] }
-        },
-        pending: {
-          $sum: { $cond: [{ $eq: ['$status', 'pending'] }, 1, 0] }
-        },
-        averageRating: { $avg: '$progressAssessment.rating' },
-        averageProgress: { $avg: '$progressAssessment.overallProgress' }
-      }
-    }
-  ]);
-};
 
 module.exports = mongoose.model('CheckIn', checkInSchema);

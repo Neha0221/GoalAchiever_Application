@@ -18,10 +18,8 @@ const Dashboard = () => {
   const { 
     upcomingCheckins = [], 
     overdueCheckins = [], 
-    statistics: checkinStats,
     fetchUpcomingCheckins,
-    fetchOverdueCheckins,
-    fetchStatistics
+    fetchOverdueCheckins
   } = useCheckIns();
 
   useEffect(() => {
@@ -32,12 +30,11 @@ const Dashboard = () => {
     }
     
     // Fetch check-in data
-    if (fetchUpcomingCheckins && fetchOverdueCheckins && fetchStatistics) {
+    if (fetchUpcomingCheckins && fetchOverdueCheckins) {
       fetchUpcomingCheckins(5);
       fetchOverdueCheckins();
-      fetchStatistics('month');
     }
-  }, [fetchGoals, fetchAnalytics, fetchUpcomingCheckins, fetchOverdueCheckins, fetchStatistics]);
+  }, [fetchGoals, fetchAnalytics, fetchUpcomingCheckins, fetchOverdueCheckins]);
 
   const getRecentGoals = () => {
     if (!Array.isArray(goals)) return [];
@@ -83,7 +80,7 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Stats */}
-        <div className="quick-stats">
+        {/* <div className="quick-stats">
           <div className="stat-card">
             <div className="stat-icon">🎯</div>
             <div className="stat-content">
@@ -112,7 +109,7 @@ const Dashboard = () => {
               <p>Avg Progress</p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="dashboard-grid">
           <div className="dashboard-card">
@@ -216,13 +213,6 @@ const Dashboard = () => {
                 <div className="stat-content">
                   <div className="stat-value">{overdueCheckins.length}</div>
                   <div className="stat-label">Overdue</div>
-                </div>
-              </div>
-              <div className="checkin-stat">
-                <div className="stat-icon">📈</div>
-                <div className="stat-content">
-                  <div className="stat-value">{checkinStats.completionRate || 0}%</div>
-                  <div className="stat-label">Completion Rate</div>
                 </div>
               </div>
             </div>

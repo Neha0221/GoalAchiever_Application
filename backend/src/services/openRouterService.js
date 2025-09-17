@@ -39,7 +39,7 @@ class OpenRouterService {
   }
 
   // Main method to generate AI responses with retry logic
-  async generateResponse(messages, maxTokens = 1000, retryCount = 0) {
+  async generateResponse(messages, maxTokens = 300, retryCount = 0) {
     try {
       // Ensure minimum interval between requests
       await this.ensureRequestInterval();
@@ -185,10 +185,10 @@ class OpenRouterService {
   // AI Tutor specific response generation
   async generateTutorResponse(userMessage, context) {
     // Use mock service for testing if enabled
-    if (this.shouldUseMockService()) {
-      console.log('🤖 Using Mock AI Service for testing');
-      return await MockAIService.generateTutorResponse(userMessage, context);
-    }
+    // if (this.shouldUseMockService()) {
+      // console.log('🤖 Using Mock AI Service for testing');
+      // return await MockAIService.generateTutorResponse(userMessage, context);
+    // }
 
     const systemPrompt = this.buildSystemPrompt(context);
     
@@ -197,7 +197,7 @@ class OpenRouterService {
       { role: 'user', content: userMessage }
     ];
 
-    return await this.generateResponse(messages, 800);
+    return await this.generateResponse(messages, 300);
   }
 
   // Theory explanation
@@ -217,10 +217,10 @@ class OpenRouterService {
   // Practice problem generation
   async generatePracticeProblems(module, userProgress) {
     // Use mock service for testing if enabled
-    if (this.shouldUseMockService()) {
-      console.log('🤖 Using Mock AI Service for practice problems');
-      return await MockAIService.generatePracticeProblems(module, userProgress);
-    }
+    // if (this.shouldUseMockService()) {
+    //   console.log('🤖 Using Mock AI Service for practice problems');
+    //   return await MockAIService.generatePracticeProblems(module, userProgress);
+    // }
 
     const systemPrompt = `Generate 3 practice problems for the learning module: "${module.title}". 
     User's current progress: ${userProgress}%. 
@@ -249,10 +249,10 @@ class OpenRouterService {
   // Quick Q&A responses
   async generateQuickResponse(userMessage) {
     // Use mock service for testing if enabled
-    if (this.shouldUseMockService()) {
-      console.log('🤖 Using Mock AI Service for quick response');
-      return await MockAIService.generateQuickResponse(userMessage);
-    }
+    // if (this.shouldUseMockService()) {
+    //   console.log('🤖 Using Mock AI Service for quick response');
+    //   return await MockAIService.generateQuickResponse(userMessage);
+    // }
 
     const systemPrompt = `You are a helpful AI tutor. Provide concise, helpful responses to user questions. 
     Be encouraging and educational. Keep responses under 200 words.`;
